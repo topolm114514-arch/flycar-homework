@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小鹏汇天 ARIDGE「陆地航母」全方位调研与分析 | 飞行汽车技术基础课程作业</title>
+<meta name="description" content="针对小鹏汇天（ARIDGE）分体式飞行汽车“陆地航母”的技术、适航、应用场景与市场可行性的深度调研。">
+<style>
+:root{
+  --bg:#0f1419; --panel:#161d26; --panel2:#1c2531; --line:#2a3646;
+  --text:#e6edf3; --muted:#9aa7b5; --accent:#3ec1d3; --accent2:#f5a524;
+  --ok:#3fb27f; --warn:#f5a524; --bad:#e5534b;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.75;font-size:16px}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+header.hero{padding:72px 24px 56px;background:linear-gradient(135deg,#0f2a35 0%,#0f1419 60%);border-bottom:1px solid var(--line)}
+.wrap{max-width:1040px;margin:0 auto}
+.hero .tag{display:inline-block;font-size:13px;color:var(--accent);border:1px solid var(--accent);padding:2px 10px;border-radius:99px;margin-bottom:16px}
+.hero h1{font-size:clamp(28px,5vw,46px);line-height:1.25;margin:0 0 8px}
+.hero .en{color:var(--muted);font-size:18px;margin-bottom:20px}
+.hero p.meta{color:var(--muted);font-size:14px;margin:0}
+nav.toc{position:sticky;top:0;z-index:10;background:rgba(15,20,25,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:4px;overflow-x:auto;padding:8px 24px;white-space:nowrap}
+nav.toc a{color:var(--muted);font-size:14px;padding:4px 10px;border-radius:6px}
+nav.toc a:hover{background:var(--panel2);color:var(--text);text-decoration:none}
+main{padding:24px}
+section{padding:40px 0;border-bottom:1px dashed var(--line)}
+section:last-of-type{border-bottom:none}
+h2{font-size:28px;margin:0 0 4px}
+h2 small{display:block;font-size:14px;color:var(--muted);font-weight:400;margin-top:2px;letter-spacing:.5px}
+h3{font-size:20px;margin:28px 0 8px;color:var(--accent)}
+p{margin:10px 0}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.card h4{margin:0 0 6px;font-size:16px}
+.kpi{font-size:30px;font-weight:700;color:var(--accent2);line-height:1.2}
+.kpi-label{color:var(--muted);font-size:13px}
+.callout{border-left:4px solid var(--accent);background:var(--panel);padding:12px 16px;border-radius:0 8px 8px 0;margin:16px 0}
+.callout.warn{border-color:var(--warn)} .callout.bad{border-color:var(--bad)}
+.badge{display:inline-block;font-size:12px;padding:1px 8px;border-radius:99px;margin-right:6px;vertical-align:1px;font-weight:600}
+.A{background:rgba(63,178,127,.18);color:var(--ok)}
+.B{background:rgba(245,165,36,.18);color:var(--warn)}
+.C{background:rgba(229,83,75,.18);color:var(--bad)}
+.E{background:rgba(62,193,211,.18);color:var(--accent)}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px;background:var(--panel);border-radius:10px;overflow:hidden}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--panel2);color:var(--muted);font-weight:600;font-size:13px}
+tr:last-child td{border-bottom:none}
+.tablewrap{overflow-x:auto}
+.timeline{position:relative;margin:20px 0 0 8px;padding-left:24px;border-left:2px solid var(--line)}
+.timeline .ev{position:relative;margin-bottom:18px}
+.timeline .ev::before{content:"";position:absolute;left:-31px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.timeline .ev.bad::before{background:var(--bad)} .timeline .ev.warn::before{background:var(--warn)}
+.timeline .d{font-weight:700;color:var(--accent2);font-size:14px}
+.calc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.calc label{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-top:12px}
+.calc label b{color:var(--text)}
+.calc input[type=range]{width:100%;accent-color:var(--accent)}
+.result{margin-top:16px;padding:12px 14px;background:var(--panel2);border-radius:8px;font-size:15px}
+.result b{color:var(--accent2);font-size:20px}
+.bar{height:22px;border-radius:4px;background:linear-gradient(90deg,var(--accent),#2a8fa0);margin:4px 0;color:#04222a;font-size:12px;font-weight:700;padding:0 8px;line-height:22px;white-space:nowrap}
+ul{padding-left:22px} li{margin:4px 0}
+.small{font-size:13px;color:var(--muted)}
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.swot{grid-template-columns:1fr}}
+.swot .card h4{display:flex;align-items:center;gap:8px}
+footer{padding:32px 24px 60px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+ol.src{padding-left:22px} ol.src li{margin:6px 0;word-break:break-all}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="tag">飞行汽车技术基础 · 课程作业</span>
+    <h1>小鹏汇天 ARIDGE「陆地航母」<br>全方位调研与分析</h1>
+    <div class="en">XPeng AEROHT / ARIDGE Land Aircraft Carrier — Technology, Certification, Scenarios and Market Feasibility</div>
+    <p class="meta">调研对象：分体式飞行汽车“陆地航母”（陆行体 + X3-F 飞行体） · 信息截至 2026-11-18 · 全部数据来自公开报道，未经作者独立测量</p>
+  </div>
+</header>
+
+<nav class="toc"><div class="wrap">
+  <a href="#summary">摘要</a><a href="#method">调研方法</a><a href="#history">发展历程</a><a href="#product">产品定义</a>
+  <a href="#tech">关键技术</a><a href="#physics">能量估算</a><a href="#safety">安全与适航</a><a href="#scenes">应用场景</a>
+  <a href="#market">市场可行性</a><a href="#compete">竞品对比</a><a href="#swot">SWOT</a><a href="#gates">关键节点</a><a href="#refs">来源</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="summary">
+  <h2>1. 摘要<small>Executive Summary</small></h2>
+  <p>小鹏汇天（2026 年品牌更名为 ARIDGE）选择了与多数 eVTOL 公司不同的路线：<b>不做“会飞的汽车”，而做“带飞行器的汽车”</b>。“陆地航母”由一辆 6 轮增程式陆行体和一个可收纳在车内的 2 座电动飞行体（X3-F）组成，目标是用一辆车解决“最后一公里的起降与存放”问题。</p>
+  <div class="grid g3">
+    <div class="card"><div class="kpi">7,000+</div><div class="kpi-label">全球预订单（主要来自中国与中东）</div></div>
+    <div class="card"><div class="kpi">≤ 200 万元</div><div class="kpi-label">官方表述的售价上限</div></div>
+    <div class="card"><div class="kpi">5,000 → 10,000</div><div class="kpi-label">广州工厂规划年产能（台/年）</div></div>
+  </div>
+  <h3>核心判断</h3>
+  <table class="tablewrap"><tr><th style="width:22%">维度</th><th style="width:18%">评级</th><th>理由</th></tr>
+  <tr><td>技术可行性</td><td><span class="badge A">较高</span></td><td>6 旋翼 + 2 涵道的分布式电推进已有多次载人飞行验证，单机故障冗余设计成熟；但空中航程仅约 30–50 km，受电池能量密度限制。</td></tr>
+  <tr><td>适航可行性</td><td><span class="badge B">中等</span></td><td>型号合格证（TC）申请 2024-03 受理、生产合格证（PC）申请 2025-05 受理，2026-07 进入 CAAC 首批 eVTOL 适航合规名单，但<b>至今未取得 TC</b>；官方已把终端交付推迟到 2027。</td></tr>
+  <tr><td>运营可行性</td><td><span class="badge B">中等偏低</span></td><td>个人用户需飞行执照；低空空域开放、起降场网络、保险与监管细则仍在建设中。</td></tr>
+  <tr><td>市场可行性</td><td><span class="badge B">中等</span></td><td>订单规模可观，但订单多为可退订金，真实转化率未知；单价高、使用场景偏“体验/高端玩具”，短期难成规模刚需。</td></tr>
+  </table>
+  <div class="callout"><b>一句话结论：</b>“陆地航母”是目前全球最接近量产的<u>个人用</u>分体式飞行汽车，其商业成败取决于两件事——<b>2027 年能否拿到 TC</b>，以及<b>低空政策能否让个人用户真正“飞得起来”</b>。在这两件事落地之前，它更像一款高端体验型产品，而不是通勤交通工具。</div>
+</section>
+
+<section id="method">
+  <h2>2. 调研方法与证据分级<small>Research Design &amp; Evidence Grading</small></h2>
+  <p>本页综合了公司官方发布、主流财经/汽车媒体、行业数据库（evtol.news、Venture Atlas 等）以及监管机构公开信息。由于大量参数来自媒体转述，不同来源之间存在出入，因此对每一项关键结论标注证据等级：</p>
+  <ul>
+    <li><span class="badge A">A</span> 官方发布或多个独立来源一致。</li>
+    <li><span class="badge B">B</span> 单一来源或来源间有出入，使用时需谨慎。</li>
+    <li><span class="badge C">C</span> 公司愿景或目标，尚无验证。</li>
+    <li><span class="badge E">E</span> 作者基于公开参数的估算（会写明假设）。</li>
+  </ul>
+  <div class="callout warn"><b>已发现的数据冲突：</b>X3-F 的空中航程在不同来源中分别是 <b>30 km</b> 与 <b>50 km</b>；量产时间在不同时间点的报道里出现“2026 年”“2026 年下半年”“2027 年年中”。本页以最新来源（2026-09 IFA 柏林展）为准，并在正文标注。</div>
+</section>
+
+<section id="history">
+  <h2>3. 发展历程<small>Development Timeline</small></h2>
+  <div class="timeline">
+    <div class="ev"><div class="d">2024-03</div>CAAC 受理 X3-F 的型号合格证（TC）申请。 <span class="badge A">A</span></div>
+    <div class="ev"><div class="d">2024-09</div>“陆地航母”正式发布：3 轴 6 轮陆行体 + 可收纳的飞行体，地面部分仅需 C 类驾照。 <span class="badge A">A</span></div>
+    <div class="ev"><div class="d">2024-11</div>宣布飞行体已实现载人飞行，并公布六旋翼 + 双涵道的产品构型。 <span class="badge A">A</span></div>
+    <div class="ev"><div class="d">2025-01</div>预订单突破 3,000 台，计划 2026 年量产交付。 <span class="badge A">A</span></div>
+    <div class="ev"><div class="d">2025-05</div>CAAC 受理生产合格证（PC）申请。 <span class="badge A">A</span></div>
+    <div class="ev"><div class="d">2025-07</div>完成 2.5 亿美元 B 轮融资（此前有 1.5 亿美元 B1 轮与 12.6 亿元银团贷款用于建厂）。 <span class="badge A">A</span></div>
+    <div class="ev bad"><div class="d">2025-09-16</div>长春航展彩排中两架飞行体因“飞行间距不足”发生接触，其中一架着陆时起火，现场至少一人受伤送医。 <span class="badge A">A</span></div>
+    <div class="ev"><div class="d">2025-09（月底）</div>广州飞行汽车智造基地竣工，称具备“万辆级”年产能；2025-11-03 首台飞行体下线。 <span class="badge A">A</span></div>
+    <div class="ev"><div class="d">2025 年下半年</div>迪拜首次公开载人飞行，公司同时宣布更名为 ARIDGE（具体日期以官方稿为准）。 <span class="badge B">B</span></div>
+    <div class="ev"><div class="d">2026-03</div>中航锂电（CALB）开始量产航空电池。 <span class="badge B">B</span></div>
+    <div class="ev"><div class="d">2026-07-22</div>CAAC 公布首批 eVTOL 适航合规名单，ARIDGE 入选四家之一（尚非取得 TC）。 <span class="badge A">A</span></div>
+    <div class="ev"><div class="d">2026-08-10</div>第 1,000 套飞行汽车电推进系统下线。 <span class="badge A">A</span></div>
+    <div class="ev warn"><div class="d">2026-09</div>IFA 柏林展：称量产仍在 2026 下半年启动（初期约 5,000 台/年），但 CAAC 批准与终端交付后移至 2027 年。 <span class="badge A">A</span></div>
+  </div>
+  <p class="small">注：2025 年 7–9 月的部分条目来自转述稿，已按证据等级标注。</p>
+</section>
+
+<section id="product">
+  <h2>4. 产品定义<small>Product Definition</small></h2>
+  <p>“陆地航母”采用<b>分体式</b>架构：陆行体是一辆日常可开的车，同时是飞行体的“母舰”——负责运输、停放、补能，并为飞行体提供起降平台。</p>
+  <div class="tablewrap"><table>
+    <tr><th>模块</th><th>关键参数</th><th>证据</th></tr>
+    <tr><td rowspan="5"><b>陆行体</b><br>Ground Module</td><td>尺寸约 5.5 m × 2 m × 2 m，可停入标准车位</td><td><span class="badge A">A</span></td></tr>
+    <tr><td>3 轴 6 轮，6×6 全轮驱动、后轮转向</td><td><span class="badge A">A</span></td></tr>
+    <tr><td>800 V 碳化硅增程平台，综合续航（CLTC）超 1,000 km</td><td><span class="badge A">A</span></td></tr>
+    <tr><td>可乘 4–5 人</td><td><span class="badge B">B</span></td></tr>
+    <tr><td>满油满电可支持飞行体 5–6 次飞行</td><td><span class="badge B">B</span></td></tr>
+    <tr><td rowspan="6"><b>飞行体 X3-F</b><br>Air Module</td><td>6 旋翼分布式布局 + 2 个涵道风扇；碳纤维机体与桨叶</td><td><span class="badge A">A</span></td></tr>
+    <tr><td>2 座，270° 全景座舱</td><td><span class="badge A">A</span></td></tr>
+    <tr><td>整备质量 360 kg，最大起飞质量 880 kg</td><td><span class="badge B">B</span></td></tr>
+    <tr><td>电池约 50 kWh，30%→80% 快充约 18 分钟</td><td><span class="badge B">B</span></td></tr>
+    <tr><td>单次飞行约 30 分钟；空中航程 30–50 km（来源不一致）</td><td><span class="badge B">B</span></td></tr>
+    <tr><td>单摇杆手动 / 一键自动起降 / 自主导航；约 5 分钟掌握基本操作</td><td><span class="badge C">C</span></td></tr>
+    <tr><td><b>商业信息</b></td><td>售价目标 ≤ 200 万元；订单 7,000+；工厂规划 5,000→10,000 台/年</td><td><span class="badge B">B</span></td></tr>
+  </table></div>
+  <div class="callout"><b>设计取舍：</b>飞行体只负责“短距离空中段”，长距离交给陆行体。这避开了纯 eVTOL 最难的问题——电池能量密度导致的航程不足——但代价是飞行体本身的任务半径很小，两者之间也需要一套可靠的装载 / 分离 / 对接机构。</div>
+</section>
+
+<section id="tech">
+  <h2>5. 关键技术分析<small>System Architecture &amp; Key Technologies</small></h2>
+  <div class="grid g2">
+    <div class="card"><h4>① 分布式电推进（DEP）</h4>
+      <p>6 个旋翼 + 2 个涵道风扇，提供升力与前飞推力。公开资料称其中 2 个电机失效时，飞控可在毫秒级重新分配推力并保持安全飞行（N-2 冗余）。<span class="badge B">B</span></p>
+      <p class="small">意义：电机比燃油发动机简单，适合多冗余；但冗余意味着更多电机、电调和线束，系统复杂度和重量随之上升。</p></div>
+    <div class="card"><h4>② 构型：六旋翼 + 涵道</h4>
+      <p>与 EHang 的 16 旋翼纯多旋翼、Joby 的倾转旋翼不同，X3-F 在“结构简单”和“前飞效率”之间取折中：多旋翼负责垂直起降，涵道风扇提高前飞效率。<span class="badge A">A</span></p>
+      <p class="small">代价：前飞阶段旋翼迎风阻力较大，因此巡航速度与航程都偏低（报道中的 60 km/h 量级）。</p></div>
+    <div class="card"><h4>③ 800 V 碳化硅增程平台</h4>
+      <p>陆行体采用增程式，既能在地面长途行驶，也可给飞行体充电。<span class="badge A">A</span></p>
+      <p class="small">这个“发电机 + 大电池”的组合，让用户在没有充电桩的场地（如飞行营地）也能完成多次补能。</p></div>
+    <div class="card"><h4>④ 航空级电池与快充</h4>
+      <p>飞行体电池约 50 kWh，18 分钟补能 30%→80%；供应商 CALB 自 2026 年 3 月起批量供应航空电池。<span class="badge B">B</span></p>
+      <p class="small">航空电池需要高放电倍率与高安全性（热失控防护），比车用电池更苛刻，是适航审查重点之一。</p></div>
+    <div class="card"><h4>⑤ 自主飞控与简化操作</h4>
+      <p>目标是“单摇杆 + 一键起降”，降低驾驶门槛。<span class="badge C">C</span></p>
+      <p class="small">难点：低门槛并不等于低责任；起降场地、气象条件判断、空域冲突回避都需要系统或人来承担。</p></div>
+    <div class="card"><h4>⑥ 车机一体化制造</h4>
+      <p>广州基地宣称采用汽车式流水线，目标每 30 分钟下线一台飞行器。<span class="badge C">C</span></p>
+      <p class="small">汽车工艺带来成本优势，但航空级质量一致性与可追溯性（PC 审查）与汽车标准不同，是量产爬坡的真正门槛。</p></div>
+  </div>
+</section>
+
+<section id="physics">
+  <h2>6. 物理与能量估算<small>Energy Budget — Author's Estimate</small></h2>
+  <p>公开信息给出了最大起飞质量（880 kg）、电池容量（约 50 kWh）和飞行时间（约 30 分钟）。下面用一个最简单的模型检验这些数字是否自洽：<br>
+  <span class="badge E">E</span> 平均功率 = 最大起飞质量 × 比功率（W/kg）；续航 = 可用电量 ÷ 平均功率。</p>
+  <div class="calc">
+    <label>最大起飞质量 <b><span id="v-m">880</span> kg</b></label>
+    <input type="range" id="m" min="600" max="1100" step="10" value="880">
+    <label>电池容量 <b><span id="v-b">50</span> kWh</b></label>
+    <input type="range" id="b" min="30" max="80" step="1" value="50">
+    <label>可用电量比例（含安全余量） <b><span id="v-u">80</span> %</b></label>
+    <input type="range" id="u" min="50" max="95" step="1" value="80">
+    <label>平均比功率 <b><span id="v-p">90</span> W/kg</b></label>
+    <input type="range" id="p" min="50" max="220" step="5" value="90">
+    <label>平均前飞速度 <b><span id="v-s">60</span> km/h</b></label>
+    <input type="range" id="s" min="30" max="180" step="5" value="60">
+    <div class="result" id="calc-out"></div>
+  </div>
+  <div class="callout warn"><b>如何解读：</b>
+    <ul>
+      <li>默认参数（90 W/kg）给出约 30 分钟、约 30 km 的结果，与官方“30 分钟”和较低的“30 km”航程一致，说明<b>30 km 比 50 km 更像是可信的保守数字</b>（这是推论，不是官方说法）。</li>
+      <li>如果把比功率提高到悬停常见水平（约 150–200 W/kg），续航会降到约 10–15 分钟，说明起降和悬停段的能量代价很高，实际任务剖面应以“短时起降 + 巡航”为主。</li>
+      <li>要把航程翻倍，需要电池系统能量密度显著提升，或进一步提高前飞气动效率；这也是飞行体不做长途任务、交给陆行体负责的根本原因。</li>
+    </ul>
+  </div>
+</section>
+
+<section id="safety">
+  <h2>7. 安全、适航与法规<small>Safety, Airworthiness &amp; Regulation</small></h2>
+  <h3>7.1 适航进度（中国民航局，CAAC）</h3>
+  <table class="tablewrap">
+    <tr><th>阶段</th><th>状态</th><th>证据</th></tr>
+    <tr><td>型号合格证（TC）</td><td>2024-03 受理，<b>尚未获颁</b></td><td><span class="badge A">A</span></td></tr>
+    <tr><td>生产合格证（PC）</td><td>2025-05 受理</td><td><span class="badge A">A</span></td></tr>
+    <tr><td>适航合规快速通道名单</td><td>2026-07-22 入选首批四家之一</td><td><span class="badge A">A</span></td></tr>
+    <tr><td>制造商资质</td><td>已被认定为航空器制造商</td><td><span class="badge B">B</span></td></tr>
+    <tr><td>终端交付</td><td>预计 2027 年（较此前后移）</td><td><span class="badge A">A</span></td></tr>
+  </table>
+  <h3>7.2 事故启示：长春航展彩排</h3>
+  <div class="callout bad">2025-09-16，两架飞行体在双机编队演练中发生接触，一架着陆时起火，至少一人受伤。公司给出的原因是“飞行间距不足”。</div>
+  <ul>
+    <li><b>可以确认的：</b>飞行器在遭受碰撞后依然完成了降落，说明冗余设计和结构在一定程度上起作用；但着陆后起火，也暴露了电池热安全和乘员逃生方面的审查关注点。</li>
+    <li><b>尚未公开的：</b>完整事故调查结论、起火原因、对适航审查的实际影响。</li>
+    <li><b>系统层面的教训：</b>多机编队属于运营程序问题，而不仅是飞行器问题——当用户规模放大，机间间隔、冲突探测与空域管理将成为整个系统的瓶颈。</li>
+  </ul>
+  <h3>7.3 “两套法规”叠加</h3>
+  <p>飞行汽车同时落在道路交通法规与民航法规的管辖里：</p>
+  <ul>
+    <li><b>陆行体：</b>按汽车管理，持 C 类驾照即可上路。</li>
+    <li><b>飞行体：</b>需要持有 CAAC 认可的飞行执照；官方称会为预订用户提供免费的执照考试资格，但具体的执照类别与门槛仍待细则明确。</li>
+    <li><b>空域：</b>公司计划在 G 类空域（300 m 以下）与 W 类空域（120 m 以下）等非管制空域内开展飞行登记；城市低空大规模个人飞行仍需空域政策落地。</li>
+    <li><b>在拿到 TC 之前：</b>个人用户只能参与企业组织的工程试飞，不能合法载人商业飞行。</li>
+  </ul>
+</section>
+
+<section id="scenes">
+  <h2>8. 应用场景评估<small>Application Scenarios</small></h2>
+  <p>下表是作者基于产品能力（30 km 量级航程、2 座、需起降场地）做出的主观评估（<span class="badge E">E</span>）：</p>
+  <div class="tablewrap"><table>
+    <tr><th style="width:18%">场景</th><th style="width:14%">适配度</th><th>分析</th></tr>
+    <tr><td>高端个人体验 / 飞行营地游览</td><td><span class="badge A">高</span></td><td>最贴合产品能力：短途、短时、低速，价值在“体验”而非“效率”。需要营地网络（公司称已与 70+ 飞行营地签约）。</td></tr>
+    <tr><td>文旅观光（景区空中游览）</td><td><span class="badge A">高</span></td><td>固定起降点、固定航线，更容易取得运营批准，也是中东订单的主要来源之一。</td></tr>
+    <tr><td>应急救援 / 山区、灾区快速抵达</td><td><span class="badge B">中</span></td><td>陆行体可越野 + 飞行体越障；但 2 座与有限载重限制了救援效率，更适合侦察与人员接驳。</td></tr>
+    <tr><td>城市通勤</td><td><span class="badge C">低</span></td><td>30 km 量级航程、噪音、起降场缺乏、空域管制，都与“每日通勤”的可靠性要求冲突。</td></tr>
+    <tr><td>城际出行</td><td><span class="badge C">低</span></td><td>航程不足以支撑；需要依靠陆行体，飞行段几乎没有价值。</td></tr>
+    <tr><td>物流 / 货运</td><td><span class="badge C">低</span></td><td>载重与载货空间有限，无人货运 eVTOL 更有成本优势。</td></tr>
+  </table></div>
+</section>
+
+<section id="market">
+  <h2>9. 市场可行性<small>Market Feasibility</small></h2>
+  <h3>9.1 供给侧与订单</h3>
+  <ul>
+    <li>7,000+ 台预订单按 200 万元上限折算约 <b>140 亿元</b>订单规模（媒体已有类似说法）。<span class="badge B">B</span></li>
+    <li>广州工厂规划初期 5,000 台/年，远期 10,000 台/年。<span class="badge B">B</span></li>
+    <li>融资：B1 轮 1.5 亿美元 + B 轮 2.5 亿美元 + 12.6 亿元银团贷款（建厂）。<span class="badge A">A</span></li>
+  </ul>
+  <div class="callout warn"><b>订单的含金量：</b>预订通常只需较低订金且可退，而且产品在拿到 TC 前不能合法交付。因此“7,000 台”只能理解为<u>意向规模</u>，转化率是最大的不确定变量。</div>
+  <h3>9.2 收入情景模拟（作者估算）</h3>
+  <p><span class="badge E">E</span> 假设 2027–2028 年可以交付的数量受 <b>订单转化率</b>、<b>适航获批时点</b>、<b>产能</b>三者中最小的限制。可自行调整：</p>
+  <div class="calc">
+    <label>预订单数量 <b><span id="m-o">7000</span> 台</b></label>
+    <input type="range" id="mo" min="3000" max="10000" step="100" value="7000">
+    <label>订单转化为实际交付的比例 <b><span id="m-c">40</span> %</b></label>
+    <input type="range" id="mc" min="10" max="90" step="5" value="40">
+    <label>单价 <b><span id="m-p">180</span> 万元</b></label>
+    <input type="range" id="mp" min="100" max="200" step="5" value="180">
+    <label>首年（2027）可交付产能占比 <b><span id="m-y">30</span> %</b></label>
+    <input type="range" id="my" min="10" max="100" step="5" value="30">
+    <div class="result" id="mkt-out"></div>
+    <div id="mkt-bars" style="margin-top:12px"></div>
+  </div>
+  <p class="small">说明：默认值 40% 转化率只是示例，并非来自公开数据。把转化率调到 10% 和 90%，可以看到收入规模跨度很大。这一模型忽略了二次订单、海外市场以及 A868 等后续产品。</p>
+  <h3>9.3 需求侧的约束</h3>
+  <ul>
+    <li><b>价格：</b>近 200 万元的价格，对应的是超高净值人群，市场总量天然有限。</li>
+    <li><b>使用频率：</b>个人飞行器的使用频率很低（受天气、空域、场地限制），难以形成“出行刚需”。</li>
+    <li><b>配套：</b>起降场、保险、维修保养、执照培训——每一项都需要新建生态。</li>
+    <li><b>品牌：</b>小鹏的车企基因带来供应链和品牌入口优势，但航空安全事件对品牌影响是双向的。</li>
+  </ul>
+</section>
+
+<section id="compete">
+  <h2>10. 竞品对比<small>Competitor Landscape</small></h2>
+  <div class="tablewrap"><table>
+    <tr><th>公司 / 产品</th><th>路线</th><th>认证状态（截至 2026-11）</th><th>主要用户</th></tr>
+    <tr><td><b>ARIDGE 陆地航母</b></td><td>分体式（车 + 2 座 eVTOL）</td><td>CAAC TC 受理、入合规名单，未获 TC；交付预计 2027</td><td>个人 / 文旅</td></tr>
+    <tr><td><b>亿航 EHang EH216-S</b></td><td>16 旋翼无人驾驶 2 座观光机</td><td>已取得 TC / PC / 运营合格证（AOC）；2026 年全年指引因国内商业运营审批不确定性而撤回；Q2 收入 7,790 万元</td><td>景区观光 / 政企</td></tr>
+    <tr><td><b>Joby</b></td><td>倾转旋翼，飞行员 + 4 乘客的空中出租车</td><td>FAA 型号认证第 5 阶段（最终阶段）；首批商业客运推迟到 2027</td><td>出租车运营商</td></tr>
+    <tr><td><b>Archer Midnight</b></td><td>倾转 + 分布式推进，4 乘客</td><td>FAA 4 阶段中的第 3 阶段已于 2026-04 结束；获市场调查特殊适航证</td><td>出租车运营商</td></tr>
+  </table></div>
+  <p><b>定位差异：</b>Joby / Archer 争夺的是“城市空中出租车”赛道，客户是运营商，依赖大型电池与较长航程；EHang 以无人驾驶观光机的方式率先走完中国民航认证流程；ARIDGE 则是唯一以“<u>个人拥有</u> + 车机一体”为核心的玩家，门槛更低，但对空域开放、个人执照政策的依赖也最强。</p>
+  <div class="callout">值得注意：EHang 已完全拿证，却因运营审批的不确定性而撤回全年指引。这说明<b>“拿到证书”并不等于“可以商业运营”</b>，对 ARIDGE 来说，TC 只是门槛，而不是终点。</div>
+</section>
+
+<section id="swot">
+  <h2>11. SWOT 分析<small>Strategic Assessment</small></h2>
+  <div class="swot">
+    <div class="card"><h4 style="color:var(--ok)">优势 Strengths</h4><ul>
+      <li>车机一体：解决存放、补能、转场问题</li>
+      <li>汽车供应链与规模制造经验</li>
+      <li>7,000+ 订单与较高的品牌曝光</li>
+      <li>较完整的认证申请链（TC + PC）</li></ul></div>
+    <div class="card"><h4 style="color:var(--bad)">劣势 Weaknesses</h4><ul>
+      <li>飞行体航程短（约 30–50 km），速度低</li>
+      <li>系统复杂：陆行体 + 飞行体 + 对接机构</li>
+      <li>价格高，用户群体窄</li>
+      <li>2025 年公开事故留下安全舆论负担</li></ul></div>
+    <div class="card"><h4 style="color:var(--accent)">机会 Opportunities</h4><ul>
+      <li>国家层面持续推动“低空经济”</li>
+      <li>中东等高净值市场需求</li>
+      <li>文旅、应急等运营场景落地</li>
+      <li>电池能量密度提升后的下一代产品（如 A868）</li></ul></div>
+    <div class="card"><h4 style="color:var(--warn)">威胁 Threats</h4><ul>
+      <li>TC 进度、空域政策不确定性</li>
+      <li>任何一次严重事故都会影响整个行业</li>
+      <li>订单可退，转化率不可控</li>
+      <li>EHang、广汽等竞争者加速</li></ul></div>
+  </div>
+</section>
+
+<section id="gates">
+  <h2>12. 后续需要观察的关键节点<small>Go / No-Go Gates</small></h2>
+  <table class="tablewrap">
+    <tr><th style="width:8%">序号</th><th style="width:32%">节点</th><th>判断标准</th></tr>
+    <tr><td>1</td><td>CAAC 颁发 X3-F 型号合格证</td><td>2027 年内取得；若再次延后，说明审查比预期更严格。</td></tr>
+    <tr><td>2</td><td>生产合格证与量产质量一致性</td><td>能否稳定月产并通过一致性检查，而不仅仅是“下线 1,000 套电推进系统”。</td></tr>
+    <tr><td>3</td><td>个人用户飞行执照与空域规则细则</td><td>是否出台面向个人驾驶员的、门槛可接受的执照与飞行登记规则。</td></tr>
+    <tr><td>4</td><td>首批用户交付后的真实使用数据</td><td>月飞行次数、故障率、事故率、保险费率。</td></tr>
+    <tr><td>5</td><td>订单转化与海外交付</td><td>中东、欧洲市场能否取得当地适航认可。</td></tr>
+  </table>
+</section>
+
+<section id="limits">
+  <h2>13. 局限性<small>Limitations</small></h2>
+  <ul>
+    <li>本页所有技术参数均来自公开报道，作者没有测量或拿到官方适航文件。</li>
+    <li>能量与市场收入模型是高度简化的示例，用于理解量级，不是预测。</li>
+    <li>2025 年下半年部分里程碑（迪拜首飞、品牌更名、电池供应商）来自转述稿，细节可能与官方公告有出入。</li>
+    <li>未涉及 ARIDGE 的另一款产品 A868 以及公司内部成本结构，这些信息公开资料较少。</li>
+  </ul>
+</section>
+
+<section id="refs">
+  <h2>14. 参考来源<small>Sources</small></h2>
+  <ol class="src">
+    <li><a href="https://www.jiemian.com/article/12122427.html">界面新闻：小鹏汇天“陆地航母”飞行汽车上海首飞，2026年量产交付</a></li>
+    <li><a href="https://news.qq.com/rain/a/20250715A0552X00">腾讯新闻：小鹏汇天完成2.5亿美元B轮融资，陆地航母计划2026年正式量产交付</a></li>
+    <li><a href="https://original.ifeng.com/c/8xpyNnDUBXR">凤凰网：小鹏“陆地航母”订单破7000台，计划2027年年中量产交付</a></li>
+    <li><a href="https://evtol.news/xpeng-aeroht-modular-flying-car-concept-design">evtol.news：Aridge (XPeng) Land Aircraft Carrier</a></li>
+    <li><a href="https://www.ventureatlas.org/product/aridge-land-aircraft-carrier">Venture Atlas：Land Aircraft Carrier – Aridge</a></li>
+    <li><a href="https://lowaltitudeeconomy.aero/en/aridge">Low Altitude Economy：XPeng ARIDGE Land Aircraft Carrier price, specifications and status</a></li>
+    <li><a href="https://cnevpost.com/2026/07/22/xpeng-aridge-certification-boost-evtol-compliance-list/">CnEVPost：Xpeng flying car unit gets certification boost as China unveils eVTOL compliance list</a></li>
+    <li><a href="https://english.news.cn/20260811/4008435da7ea42c3a8ad6b5d493b5be2/c.html">新华社：ARIDGE's 1,000th flying car propulsion system rolls off production line</a></li>
+    <li><a href="https://www.theglobeandmail.com/investing/markets/markets-news/Newsfile/29844814/xpeng-aeroht-makes-global-breakthrough-with-first-public-manned-flight-in-dubai-and-announces-rebrand-to-aridge/">The Globe and Mail：XPENG AEROHT first public manned flight in Dubai and rebrand to ARIDGE</a></li>
+    <li><a href="https://www.jiemian.com/article/11514323.html">界面新闻：小鹏汇天将在广州建飞行汽车量产工厂，已获1.5亿美元B1轮融资</a></li>
+    <li><a href="https://www.stcn.com/article/detail/3476352.html">证券时报：小鹏汇天“万辆级”飞行汽车工厂试产</a></li>
+    <li><a href="https://news.qq.com/rain/a/20241112A07E1J00">腾讯新闻：“陆地航母”已实现载人飞行，全倾转旋翼飞行汽车构型公布</a></li>
+    <li><a href="https://news.qq.com/rain/a/20250917A077LT00">腾讯新闻：小鹏汇天飞行器发生“接触事故”</a></li>
+    <li><a href="https://finance.sina.com.cn/roll/2025-09-17/doc-infqumnr5046867.shtml">新浪财经：小鹏旗下飞行汽车在长春航展彩排中起火</a></li>
+    <li><a href="https://chejiahao.autohome.com.cn/info/16675515">汽车之家：小鹏汇天“陆地航母”正式亮相！开这车还得考个飞行驾照？</a></li>
+    <li><a href="https://www.fool.com/earnings/call-transcripts/2026/09/01/ehang-eh-q2-2026-earnings-call-transcript/">The Motley Fool：EHang Q2 2026 Earnings Call Transcript</a></li>
+    <li><a href="https://avweb.com/aviation-news/joby-archer-initial-passenger-ops-2027/">AVweb：Joby, Archer Push Initial Passenger Operations to 2027</a></li>
+    <li><a href="https://lowaltitudeeconomy.aero/en/evtol-news-and-electric-aircraft-news/low-altitude-economy/faa-evtol-certification-joby-archer-endgame">Low Altitude Economy：The FAA Certification Race Enters the Endgame For Joby And Archer</a></li>
+    <li><a href="https://lab.autozyx.com/fundamentals-of-flying-vehicle-technology/tesla-flying-roadster/">课程参考页：Tesla Flying Roadster（结构与分析框架参考）</a></li>
+  </ol>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">飞行汽车技术基础（Fundamentals of Flying Vehicle Technology）课程作业 · 本页仅用于教学，不构成投资或购买建议 · 数据截至 2026-11-18</div>
+</footer>
+
+<script>
+(function(){
+  function $(id){return document.getElementById(id)}
+  // ---------- Energy calculator ----------
+  var ids=['m','b','u','p','s'];
+  function calc(){
+    var m=+$('m').value,b=+$('b').value,u=+$('u').value/100,p=+$('p').value,s=+$('s').value;
+    $('v-m').textContent=m;$('v-b').textContent=b;$('v-u').textContent=Math.round(u*100);$('v-p').textContent=p;$('v-s').textContent=s;
+    var kw=m*p/1000;
+    var h=(b*u)/kw;
+    var min=h*60, km=h*s;
+    $('calc-out').innerHTML='平均功率 <b>'+kw.toFixed(0)+' kW</b> &nbsp;→&nbsp; 续航 <b>'+min.toFixed(0)+' 分钟</b> &nbsp;→&nbsp; 航程 <b>'+km.toFixed(0)+' km</b>'
+      +'<br><span class="small">公式：续航 = 电池容量 × 可用比例 ÷ (最大起飞质量 × 比功率)；航程 = 续航 × 平均速度</span>';
+  }
+  ids.forEach(function(i){$(i).addEventListener('input',calc)});
+  calc();
+  // ---------- Market calculator ----------
+  var mids=['mo','mc','mp','my'];
+  function mkt(){
+    var o=+$('mo').value,c=+$('mc').value/100,p=+$('mp').value,y=+$('my').value/100;
+    $('m-o').textContent=o;$('m-c').textContent=Math.round(c*100);$('m-p').textContent=p;$('m-y').textContent=Math.round(y*100);
+    var cap=5000;
+    var total=Math.round(o*c);
+    var y1=Math.min(total,Math.round(cap*y));
+    var y2=Math.min(total-y1,cap);
+    var rev1=y1*p/10000, rev2=y2*p/10000, revT=total*p/10000;
+    $('mkt-out').innerHTML='可转化订单 <b>'+total+' 台</b>；2027 年交付 <b>'+y1+' 台</b>（约 <b>'+rev1.toFixed(1)+' 亿元</b>）；2028 年交付 <b>'+y2+' 台</b>（约 <b>'+rev2.toFixed(1)+' 亿元</b>）'
+      +'<br><span class="small">按 5,000 台/年的初期产能封顶；订单全部转化时的名义总额为 '+(o*p/10000).toFixed(0)+' 亿元。</span>';
+    var max=Math.max(revT,o*p/10000,1);
+    function bar(label,val){
+      return '<div class="small">'+label+'</div><div class="bar" style="width:'+Math.max(4,val/max*100)+'%">'+val.toFixed(1)+' 亿元</div>';
+    }
+    $('mkt-bars').innerHTML=bar('名义订单总额（全部转化）',o*p/10000)+bar('按转化率折算的收入',revT)+bar('2027 年可确认收入',rev1)+bar('2028 年可确认收入',rev2);
+  }
+  mids.forEach(function(i){$(i).addEventListener('input',mkt)});
+  mkt();
+})();
+</script>
+</body>
+</html>
